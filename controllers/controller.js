@@ -4,34 +4,47 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 module.exports = function(app) {
+  app.get("/", function(req, res) {
+    res.render("index", false);
+  });
   app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
     axios.get("https://www.nytimes.com").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
-      var result = {};
-      //
-      // Now, we grab every h2 within an article tag, and do the following:
-      $(".css-1ez5fsm").each(function(i, element) {
-        // Save an empty result object
+      //let arr_result = [];
+      $(".css-8atqhb").each(function(i, element) {
+        let result = {};
+        let body_txt = [];
+        result.title = $(this)
+          .find("h2")
+          .text();
+        body_txt.push(
+          $(this)
+            .find(".e1n8kpyg0")
+            .text()
+        );
+        body_txt.push(
+          $(this)
+            .find(".e1n8kpyg1")
+            .text()
+        );
+        result.body = body_txt.join("");
 
-        // Add the text and href of every link, and save them as properties of the result object
-        result.title = $(".css-1ez5fsm").text();
-        result.body = $(".css-1pfq5u").text();
+        //arr_result.push(result);
+        console.log(result);
         // Create a new Article using the `result` object built from scraping
-        // db.News.create(result)
-        //   .then(function(dbNews) {
-        //     // View the added result in the console
-        //     console.log(dbNews);
-        //   })
-        //   .catch(function(err) {
-        //     // If an error occurred, log it
-        //     console.log(err);
-        //   });
+        db.News.create(result)
+          .then(function(dbNews) {
+            // View the added result in the console
+            console.log(dbNews);
+          })
+          .catch(function(err) {
+            // If an error occurred, log it
+            console.log(err);
+          });
       });
-
-      console.log(`${result.title}\b`);
-
+      // console.log(arr_result);
       // Send a message to the client
       res.send("Scrape Complete");
     });
