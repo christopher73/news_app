@@ -52,7 +52,7 @@ module.exports = function(app) {
 
   // Route for getting all Articles from the db
   app.get("/articles", function(req, res) {
-    // TODO: Finish the route so it grabs all of the articles
+    db.News.find({}, { __v: 0 }, (err, articles) => res.send({ articles }));
   });
 
   // Route for grabbing a specific Article by id, populate it with it's note
