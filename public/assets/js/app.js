@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     $.ajax({
       method: "GET",
-      url: "http://127.0.0.1:8080/scrape"
+      url: "/scrape"
     })
       .then(result => {
         $.getJSON("/articles", function(data) {
@@ -36,7 +36,7 @@ $(document).ready(function() {
   $("#clear").on("click", function() {
     $.ajax({
       method: "POST",
-      url: "http://127.0.0.1:8080/clearit"
+      url: "/clearit"
     }).then(function(data) {
       // Log the response
       console.log(data);
@@ -87,7 +87,7 @@ $(document).ready(function() {
     console.log($(this).attr("data-id"));
     $.ajax({
       method: "POST",
-      url: "http://127.0.0.1:8080/saveit",
+      url: "/saveit",
       data: {
         // Value taken from title input
         id: $(this).attr("data-id")
@@ -103,7 +103,7 @@ $(document).ready(function() {
     console.log($(`#comment-txt-${$(this).attr("data-btn-id")}`).val());
     $.ajax({
       method: "POST",
-      url: "http://127.0.0.1:8080/addcomment",
+      url: "/addcomment",
       data: {
         // Value taken from title input
         id: $(this).attr("data-btn-id"),
@@ -125,7 +125,7 @@ $(document).ready(function() {
     console.log($(this).attr("data-id"));
     $.ajax({
       method: "POST",
-      url: "http://127.0.0.1:8080/clear",
+      url: "/clear",
       data: {
         // Value taken from title input
         id: $(this).attr("data-id")

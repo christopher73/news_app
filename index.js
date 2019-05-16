@@ -1,7 +1,8 @@
 let mongoose = require("mongoose");
 
 var MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/news_app_db";
+  process.env.MONGODB_URI ||
+  "mongodb://heroku_1h78lnnd:oc1uomns5u9n96k0g5m3kt4474@ds157516.mlab.com:57516/heroku_1h78lnnd";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true });
 
