@@ -7,12 +7,27 @@ var Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new NoteSchema object
 // This is similar to a Sequelize model
-var NewsSchema = new Schema({
-  // `title` must be of type String
-  title: String,
-  // `body` must be of type String
-  body: String
-});
+var commentSchema = new Schema(
+  {
+    comment: String
+  },
+  {
+    timestamps: true
+  }
+);
+
+var NewsSchema = new Schema(
+  {
+    title: String,
+    body: String,
+    comments: String,
+    is_saved: false,
+    comments: [commentSchema]
+  },
+  {
+    timestamps: true
+  }
+);
 
 // This creates our model from the above schema, using mongoose's model method
 var News = mongoose.model("News", NewsSchema);

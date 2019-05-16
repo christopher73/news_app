@@ -9,7 +9,7 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <a class="nav-link " href="#">Saved Articles</a>
+                <a class="nav-link " id="save_nav" href="">Saved Articles</a>
             </li>
 
         </ul>
@@ -27,29 +27,25 @@
 <main role="main">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div id="jumbo" class="jumbotron mt-3">
         <div class="container">
             <h1 class="display-3">Mongo Scraper</h1>
             <h3> New York Times Edition</h3>
 
             <p><a class="btn btn-primary btn-lg my-5" href="https://github.com/christopher73/news_app"
                     role="button">Check
-                    the code </a></p>
+                    the GitHub code </a></p>
         </div>
     </div>
 
-    <div class="container">
-
-        <div id="wrapper">
-            <h1>Note Scraper</h1>
-            <h2><i>If you can do this...the homework should be no problem.</i></h2>
-            <div id="articles"></div>
-            <div id="notes"></div>
-        </div>
 
 
-        <!-- Example row of columns -->
-        {{!-- <div class="row">
+    <div class="container" id="articles"></div>
+
+
+
+    <!-- Example row of columns -->
+    {{!-- <div class="row">
             <div class="col-md-4">
                 <h2>Heading</h2>
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
@@ -73,9 +69,9 @@
             </div>
         </div> --}}
 
-        <hr>
+    <hr>
 
-    </div> <!-- /container -->
+    <!-- /container -->
 
 </main>
 

@@ -29,8 +29,9 @@ module.exports = function(app) {
             .find(".e1n8kpyg1")
             .text()
         );
-        result.body = body_txt.join("");
 
+        result.body = body_txt.join("");
+        result.is_saved = false;
         //arr_result.push(result);
         console.log(result);
         // Create a new Article using the `result` object built from scraping
@@ -54,22 +55,60 @@ module.exports = function(app) {
   app.get("/articles", function(req, res) {
     db.News.find({}, { __v: 0 }, (err, articles) => res.send({ articles }));
   });
+  app.get("/comments", function(req, res) {
+    db.News.find({ _id: req.body.id }, { __v: 0 }, (err, articles) =>
+      res.send({ articles })
+    );
+  });
 
   // Route for grabbing a specific Article by id, populate it with it's note
-  app.get("/articles/:id", function(req, res) {
-    // TODO
-    // ====
-    // Finish the route so it finds one article using the req.params.id,
-    // and run the populate method with "note",
-    // then responds with the article with the note included
+  app.get("/saved", function(req, res) {
+    db.News.find({ is_saved: true }, { __v: 0 }, (err, articles) =>
+      res.send({ articles })
+    );
   });
 
   // Route for saving/updating an Article's associated Note
-  app.post("/articles/:id", function(req, res) {
-    // TODO
-    // ====
-    // save the new note that gets posted to the Notes collection
-    // then find an article from the req.params.id
-    // and update it's "note" property with the _id of the new note
+  app.post("/saveit", function(req, res) {
+    console.log(req.body.id);
+    db.News.findByIdAndUpdate(
+      { _id: req.body.id },
+      { is_saved: true },
+      function(result) {
+        console.log(result);
+        res.send("recieved");
+      }
+    );
+  });
+
+  app.post("/clearit", function(req, res) {
+    db.News.remove({}, function(result) {
+      console.log(result);
+      res.send("db erased");
+    });
+  });
+
+  app.post("/clear", function(req, res) {
+    console.log(req.body.id);
+    db.News.findByIdAndRemove({ _id: req.body.id }, function(result) {
+      console.log(result);
+      res.send("recieved and erased");
+    });
+  });
+
+  app.post("/addComment", function(req, res) {
+    console.log(req.body.id);
+    db.News.findByIdAndUpdate(
+      { _id: req.body.id },
+      {
+        $push: { comments: { comment: req.body.comment } }
+      },
+      function(result) {
+        console.log(result);
+        db.News.find({ _id: req.body.id }, { __v: 0 }, (err, articles) =>
+          res.send({ articles })
+        );
+      }
+    );
   });
 };

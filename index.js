@@ -21,5 +21,5 @@ require("./controllers/controller.js")(app);
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, function() {
-  console.log("http://127.0.0.1:" + PORT);
+  console.log(`http://127.0.0.1:${PORT}`);
 });
